@@ -1,9 +1,0 @@
-package main
-
-import (
-	"./filter"
-)
-
-func main() {
-	filter.Filter()
-}
