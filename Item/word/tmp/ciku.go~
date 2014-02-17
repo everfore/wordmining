@@ -1,0 +1,73 @@
+package main
+
+import (
+	// "bufio"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"strings"
+)
+
+type Ciku []Ci
+type Ci struct {
+	M map[string]bool
+}
+
+func fromTxt(in string) (*Ciku, int) {
+	ifile, _ := os.Open(in)
+	defer ifile.Close()
+	b, err := ioutil.ReadAll(ifile)
+	if err != nil {
+		return nil, 0
+	}
+	s := string(b)
+	ss := strings.Split(s, " ")
+	ciku := make(Ciku, 3000)
+	fmt.Println(len(ss))
+	l := len(ss)
+	for i, item := range ss {
+		// if i >= 1959 {
+		// 	break
+		// }
+		ciku[i].M = make(map[string]bool, 1)
+		ciku[i].M[item] = true
+	}
+
+	//fmt.Println(ciku)
+	return &ciku, l
+}
+
+func toJson(out string) {
+	ciku, _ := fromTxt("./filter/word.txt")
+	fmt.Println(ciku)
+	// for i,item:=range ciku{
+
+	// }
+	bu, _ := json.Marshal(ciku)
+	json.Unmarshal(bu, &ciku)
+	fmt.Println(ciku)
+	ofile, _ := os.Create(out)
+	defer ofile.Close()
+	ioutil.WriteFile(out, bu, 0644)
+	fmt.Println("end")
+}
+
+func test() {
+	ciku, l := fromTxt("./filter/word.txt")
+	out := "ciku.json"
+	c := (*ciku)[:l]
+	fmt.Println(c)
+	bu, _ := json.Marshal(c)
+	json.Unmarshal(bu, &ciku)
+	ofile, _ := os.Create(out)
+	defer ofile.Close()
+	ioutil.WriteFile(out, bu, 0644)
+	fmt.Println((*ciku)[0].M)
+	fmt.Println("end")
+}
+func main() {
+	// toJson("./filter/word.txt", "ciku.json")
+	// toJson("ciku.json")
+	test()
+}
