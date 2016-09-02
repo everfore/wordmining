@@ -57,7 +57,7 @@ func (w *Words) Init() {
 }
 
 // func main1() {
-// 	words := Words{ID: "shaalx"}
+// 	words := Words{ID: "toukii"}
 // 	words.Word = make([]string, 10, 100)
 // 	words.Word = []string{"cat", "beef"}
 // 	filename := "words.json"
